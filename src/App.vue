@@ -2,8 +2,14 @@
   <div class="app">
     <div :class='[{flexStart: step === 1}, "wrapper"]'>
       <Claim v-if='step === 0' />
+      <transition name='slide' >
+        <img src='./assets/logo.svg' class='logo' v-if='step === 1' />
+      </transition>
       <SearchInput v-model='searchValue' @input='handleInput' :dark='step === 1' />
-      <HeroImage v-if='step === 0' />
+      <transition name='fade' >
+        <HeroImage v-if='step === 0' />
+      </transition>
+
     </div>
   </div>
 </template>
@@ -61,7 +67,20 @@
   body {
     font-family: 'Montserrat', sans-serif;
   }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s ease;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+  .slide-enter-active, .slide-leave-active {
+  transition: margin-top .5s ease;
+  }
+  .slide-enter, .slide-leave-to {
+    margin-top: -50px;
+  }
   .wrapper {
+    position: relative;
     width: 100%;
     height: 100vh;
     margin: 0;
@@ -73,6 +92,11 @@
 
     &.flexStart {
       justify-content: flex-start;
+    }
+
+    .logo {
+      position: absolute;
+      top: 30px;
     }
 
   }

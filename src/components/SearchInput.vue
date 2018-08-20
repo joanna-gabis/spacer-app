@@ -64,7 +64,6 @@
     border-bottom-color: #1e3d4a;
     &:focus {
       box-shadow: 0 10px 20px -8px rgba(#1e3d4a, .2);
-
     }
   }
 </style>
