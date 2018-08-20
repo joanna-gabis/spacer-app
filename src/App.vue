@@ -1,15 +1,15 @@
 <template>
   <div class="app">
     <div :class='[{flexStart: step === 1}, "wrapper"]'>
-      <Claim v-if='step === 0' />
       <transition name='slide' >
         <img src='./assets/logo.svg' class='logo' v-if='step === 1' />
       </transition>
-      <SearchInput v-model='searchValue' @input='handleInput' :dark='step === 1' />
       <transition name='fade' >
         <HeroImage v-if='step === 0' />
       </transition>
 
+      <Claim v-if='step === 0' />
+      <SearchInput v-model='searchValue' @input='handleInput' :dark='step === 1' />
     </div>
   </div>
 </template>
