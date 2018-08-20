@@ -1,15 +1,41 @@
 <template>
-  <div v-for='item in results'>
-    <p> {{ item.links[0].href }} </p>
+  <div :style='style' class='item' >
+
   </div>
 </template>
 <script>
   export default {
     name: 'Item',
+    props: {
+      item: {
+        type: Object,
+        required: true,
+      },
+    },
+    data() {
+      return {
+        photo: this.item.links[0].href,
+        title: this.item.data[0].item,
+      }
+    },
+    computed: {
+      style() {
+        return `background-image: url("${this.photo}")`;
+      },
+    }
 
   }
-
 </script>
-<style>
+<style lang='scss' scoped >
+  .item {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    width: 40vw;
+    height: 250px;
 
+    @media (min-width: 768px) {
+      width: 25vw;
+    }
+  }
 </style>
