@@ -2,11 +2,11 @@
 <div class="outerWrapper">
   <div class="innerWrapper">
     <div class="photo">
-      <img src='https://static.baza.farpost.ru/v/1501302674422_bulletin'/>
+      <img :src='photo'/>
     </div>
     <div class="description">
-      <h2 class='title'>Lorem ipsum</h2>
-      <p class='description'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+      <h2 class='title'>{{ title }} </h2>
+      <p class='description'> {{ description }}
       </p>
     </div>
   </div>
@@ -17,7 +17,24 @@
 <script>
 export default {
 name: 'Modal',
-
+props: {
+  item: {
+    type: Object,
+    required: true,
+  },
+},
+data() {
+  return {
+    photo: null,
+    title: null,
+    description: null,
+  }
+},
+mounted() {
+  this.photo = this.item.links[0].href;
+  this.title = this.item.data[0].title;
+  this.description = this.item.data[0].description.substr(0, 200);
+},
 }
 </script>
 
@@ -29,39 +46,63 @@ name: 'Modal',
   top: 0;
   left: 0;
   background: #f6f6ff;
+
+  @media (min-width: 1024px) {
+    max-width: 70%;
+    height: 60%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    box-shadow: 0 30px 30px -10px rgba(0,0,0,.3);
+  }
 }
 
 .innerWrapper {
   display: flex;
   height: 100%;
   padding: 50px;
-  justify-content: enter;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
 
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+
   .photo {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 100%;
     background: black;
+
+    @media (min-width: 1024px) {
+      width: 50%;
+      margin-right: 40px;
+    }
 
     img {
       width: 100%;
-
+      height: 100%;
     }
   }
 
   .description {
     color: #333;
+    margin-top: 10px;
+  }
+
+  .title {
+    color: #1e3d4a;
   }
 
 }
 .close {
     position: absolute;
     right: 30px;
-    top: 20px;
+    top: 30px;
     width: 30px;
     height: 30px;
-    //padding: 30px;
     cursor: pointer;
 
     &::before,
@@ -72,8 +113,8 @@ name: 'Modal',
       height: 2px;
       background: black;
       display: block;
-      //top: 0;
-      //right: 0;
+      top: 0;
+      right: 0;
     }
     &::before {
       transform: rotate(45deg);
